@@ -9,7 +9,7 @@ IDD-20K Part I
 IDD-20K Part II
 
 # Implementation
-# Environment Setup
+## Environment Setup
 
 Developed on Windows 11 using Python 3.10.2
 
@@ -19,7 +19,7 @@ Created a virtual environment using venv
 
 Installed libraries: numpy, pandas==1.2.1, tqdm, Pillow, scipy==1.1.0, imageio
 
-# Dataset Preparation
+## Dataset Preparation
 
 Used the IDD-20K dataset from AutoNUE Challenge 2021 (Parts I and II)
 
@@ -29,7 +29,7 @@ Focused on Level 3 annotations with 26 semantic classes
 
 Combined both dataset parts into one directory
 
-# Label Generation
+## Label Generation
 
 Annotations in JSON format converted to PNG masks using createLabels.py from AutoNUE’s GitHub
 
@@ -37,7 +37,7 @@ Annotations in JSON format converted to PNG masks using createLabels.py from Aut
 Each pixel in the PNG masks represents a class ID (0 to 25)
 
 
-# Model: DeepLabV3+
+## Model: DeepLabV3+
 
 Chosen for its strong performance in semantic segmentation tasks
 
@@ -53,7 +53,7 @@ Decoder: Restores spatial detail for better accuracy
 
 Implemented and trained using PyTorch
 
-# Training
+## Training
 
 Split data into training and validation sets
 
@@ -61,7 +61,7 @@ Split data into training and validation sets
 Applied transformations: resizing, normalization, and tensor conversion
 
 
-# Settings:
+## Settings:
 
 Optimizer: Adam
 
@@ -78,7 +78,7 @@ Loss function: CrossEntropyLoss
 Epochs: 50
 
 
-# Prediction and Evaluation
+## Prediction and Evaluation
 
 Generated segmentation maps for validation images
 
@@ -89,7 +89,7 @@ Resized predicted and ground truth masks to 1280x720 using nearest neighbor inte
 Evaluated performance using mean Intersection over Union (mIoU)
 
 
-# Visualization
+## Visualization
 
 Overlaid predicted masks on original images using OpenCV
 
