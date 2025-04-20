@@ -95,3 +95,24 @@ Overlaid predicted masks on original images using OpenCV
 
 
 Helped visually assess model accuracy in complex scenes with poor lighting or heavy traffic
+
+# Result
+
+![Screenshot 2025-04-20 120244](https://github.com/user-attachments/assets/31807573-6ff3-4f9f-b9fb-bd15b4069bf9)
+![Screenshot 2025-04-20 121104](https://github.com/user-attachments/assets/a590cbe9-55cd-4fbe-a70a-ce2d611074e6)
+![Screenshot 2025-04-20 121235](https://github.com/user-attachments/assets/c08dea92-36ae-42f2-b298-19795b6402ba)
+![Screenshot 2025-04-20 121439](https://github.com/user-attachments/assets/4599c479-5886-4cfa-b543-628aae2ce12f)
+
+
+We used DeepLabV3+ to perform semantic segmentation on road scenes, successfully labeling each pixel into key categories like roads, vehicles, and pedestrians. The model produced accurate results, and the full pipeline from data prep to prediction worked well. This project shows how semantic segmentation can support safer, smarter AI-driven transportation.
+
+
+
+
+
+
+
+
+
+
+
