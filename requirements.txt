@@ -1,0 +1,7 @@
+numpy
+opencv-python
+pillow
+tqdm
+matplotlib
+albumentations
+tensorflow      # or torch+torchvision, depending on your train.py
