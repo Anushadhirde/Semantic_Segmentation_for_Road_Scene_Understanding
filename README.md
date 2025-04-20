@@ -1,4 +1,4 @@
-## Semantic Segmentation for Road Scene Understanding using DeepLabV3+
+# Semantic Segmentation for Road Scene Understanding using DeepLabV3+
 # Project objective
 The main goal of this project is to apply semantic segmentation to road scenes using the IDD dataset and DeepLabV3+. The work involves exploring the dataset’s structure, especially the 26 fine-grained level-3 classes specific to Indian roads. We used official AutoNUE tools to create accurate pixel-level masks for training. The DeepLabV3+ model was trained to handle complex scenes while preserving object boundaries. We evaluated its performance using the mIoU metric at 720p resolution, following AutoNUE standards. The results help assess how well the model works in unstructured traffic and show its potential for improving autonomous driving and intelligent transport systems.
 # Dataset
