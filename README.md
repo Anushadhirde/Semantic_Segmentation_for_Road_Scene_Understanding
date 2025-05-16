@@ -1,57 +1,66 @@
 # Semantic Segmentation for Road Scene Understanding using DeepLabV3+
 # Project objective
-The main goal of this project is to apply semantic segmentation to road scenes using the IDD dataset and DeepLabV3+. The work involves exploring the dataset’s structure, especially the 26 fine-grained level-3 classes specific to Indian roads. We used official AutoNUE tools to create accurate pixel-level masks for training. The DeepLabV3+ model was trained to handle complex scenes while preserving object boundaries. We evaluated its performance using the mIoU metric at 720p resolution, following AutoNUE standards. The results help assess how well the model works in unstructured traffic and show its potential for improving autonomous driving and intelligent transport systems.
+To develop a semantic segmentation model for road scene understanding using DeepLabV3+.
+The aim is to classify each pixel of street-level images into predefined classes like road, vehicle, pedestrian, etc.
+This helps in creating detailed scene maps that support autonomous driving and traffic analysis.
+We used the IDD dataset and trained the model using PyTorch for pixel-wise classification.
+
 # Dataset
-The dataset used was the IDD-20K dataset, released as part of the AutoNUE Challenge 2021. It contains over 20,000 images of Indian road scenes, annotated at three levels of hierarchy. For this project, Level 3 annotations (26 classes) were used.
+Name: Indian Driving Dataset - Segmentation Part 2
 
-IDD-20K Part I
+Type: Road scene dataset for semantic segmentation
 
-IDD-20K Part II
+Size: 8.5 GB 
+
+Structure:
+
+Images are divided into train, val, and test folders.
+
+Corresponding semantic segmentation masks are provided for train and val.
+Source: https://www.kaggle.com/datasets/sovitrath/indian-driving-dataset-segmentation-part-2
 
 # Implementation
-## Environment Setup
+## Environment Setup 
 
-Developed on Windows 11 using Python 3.10.2
-
-
-Created a virtual environment using venv
-
-
-Installed libraries: numpy, pandas==1.2.1, tqdm, Pillow, scipy==1.1.0, imageio
+We  started  the  implementation  on  Google  Colab  since  it's  a  great  cloud-based 
+setup  for  testing  deep  learning  models.  We  turned  on  GPU  acceleration  to 
+make  the  training  process  faster.  To  keep  everything  organized  and  make  sure 
+we  didn’t  lose  progress  between  sessions,  we  also  connected  Google  Drive. 
+That’s  where  we  stored  the  dataset  and  saved  model  checkpoints  so  we  could 
+pick up right where we left off if needed. 
 
 ## Dataset Preparation
 
-Used the IDD-20K dataset from AutoNUE Challenge 2021 (Parts I and II)
+We  used  the  IDD  Segmentation  Part  2  dataset  from  Kaggle,  which  has  urban 
+road  images  and  their  matching  grayscale  segmentation  masks.  Each  pixel  in 
+the  mask  represents  a  specific  object  like  a  road,  car,  or  person.  We  organized 
+everything  into  folders  and  used  a  custom  data  loader  to  make  sure  each 
+image matched with the right mask. 
 
+●  Download  IDD Part 2  from  Kaggle  . 
+●  Organize the dataset into folders: images/ and masks/. 
+●  Ensure that each image has a corresponding segmentation mask. 
 
-Focused on Level 3 annotations with 26 semantic classes
+## Data Preprocessing and Augmentation
 
-
-Combined both dataset parts into one directory
-
-## Label Generation
-
-Annotations in JSON format converted to PNG masks using createLabels.py from AutoNUE’s GitHub
-
-
-Each pixel in the PNG masks represents a class ID (0 to 25)
+All  images  and  masks  were  resized  to  256×256  for  consistency.  We 
+normalized  the  images  using  ImageNet  stats  to  help  the  model  learn  better. 
+The  mask  values  were  kept  unchanged  to  preserve  labels,  and  we  used  data 
+augmentation to mimic different lighting and scene conditions. 
+●  Resize all input images and masks to  256x256  resolution. 
+●  Normalize pixel values (e.g., scale to 0–1 or mean-std normalization). 
+●  Convert masks to  class labels  (0–25), ensuring correct mapping.
 
 
 ## Model: DeepLabV3+
 
-Chosen for its strong performance in semantic segmentation tasks
+For  the  semantic  segmentation  task,  the  DeepLabV3+  architecture  was 
+chosen  due  to  its  strong  performance  in  preserving  object  boundaries  and 
+capturing  context  at  multiple  scales.  The  model  utilized  a  ResNet50 
+backbone  pre-trained  on  ImageNet.  To  suit  the  IDD  dataset,  which  includes 
+26  semantic  classes  ,  the  final  classifier  layer  of  the  model  was  modified  to 
+produce 26 output channels. 
 
-
-Backbone: ResNet-101 pretrained on ImageNet
-
-
-Encoder: Uses Atrous Spatial Pyramid Pooling (ASPP)
-
-
-Decoder: Restores spatial detail for better accuracy
-
-
-Implemented and trained using PyTorch
 
 ## Training
 
@@ -63,30 +72,24 @@ Applied transformations: resizing, normalization, and tensor conversion
 
 ## Settings:
 
-Optimizer: Adam
-
-
-Learning rate: 0.001
-
-
-Batch size: 8
-
-
-Loss function: CrossEntropyLoss
-
-
-Epochs: 50
+●  Loss Function: CrossEntropyLoss with ignore_index=255 
+●  Optimizer: Adam, learning rate = 0.0001 
+●  Platform: Trained on Google Colab GPU 
+●  Batching: Used DataLoader for efficient loading and preprocessing 
+●  Epochs: Ran for 2 epochs 
+●  Logging: Recorded training loss per epoch 
 
 
 ## Prediction and Evaluation
 
-Generated segmentation maps for validation images
-
-
-Resized predicted and ground truth masks to 1280x720 using nearest neighbor interpolation
-
-
-Evaluated performance using mean Intersection over Union (mIoU)
+The  evaluation  was  conducted  on  the  validation  set  with  all  predictions  and 
+ground  truths  resized  to  1280×720  resolution  ,  in  line  with  the  AutoNUE 
+benchmark format. 
+●  Pixel Accuracy 
+●  Mean IoU 
+These  metrics  indicate  that  the  model  was  able  to  reliably  distinguish 
+between  various  elements  of  the  road  scene,  such  as  vehicles,  roads, 
+pedestrians, and buildings, even in unstructured and cluttered environments.
 
 
 ## Visualization
@@ -98,10 +101,10 @@ Helped visually assess model accuracy in complex scenes with poor lighting or he
 
 # Result
 
-![Screenshot 2025-04-20 120244](https://github.com/user-attachments/assets/31807573-6ff3-4f9f-b9fb-bd15b4069bf9)
-![Screenshot 2025-04-20 121104](https://github.com/user-attachments/assets/a590cbe9-55cd-4fbe-a70a-ce2d611074e6)
-![Screenshot 2025-04-20 121235](https://github.com/user-attachments/assets/c08dea92-36ae-42f2-b298-19795b6402ba)
-![Screenshot 2025-04-20 121439](https://github.com/user-attachments/assets/4599c479-5886-4cfa-b543-628aae2ce12f)
+![Screenshot 2025-05-16 113202](https://github.com/user-attachments/assets/75724c8e-bd3d-4969-9967-eebd4ecaa6e5)
+![Screenshot 2025-05-16 113339](https://github.com/user-attachments/assets/38711819-6bf2-426a-8351-2746af70ff3f)
+![Screenshot 2025-05-16 113546](https://github.com/user-attachments/assets/1eff0f1b-463c-4805-8b4b-4a4b1476fd35)
+![Screenshot 2025-05-16 113748](https://github.com/user-attachments/assets/78ad9b9c-4cd7-49ee-a852-cec6572b7b16)
 
 
 We used DeepLabV3+ to perform semantic segmentation on road scenes, successfully labeling each pixel into key categories like roads, vehicles, and pedestrians. The model produced accurate results, and the full pipeline from data prep to prediction worked well. This project shows how semantic segmentation can support safer, smarter AI-driven transportation.
