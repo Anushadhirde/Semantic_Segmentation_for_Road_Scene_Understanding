@@ -3,3 +3,4 @@ dataset/
 __pycache__/
 *.npy
 checkpoints/
+idd_deeplabv3_model.pth/
