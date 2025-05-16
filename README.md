@@ -37,8 +37,10 @@ the  mask  represents  a  specific  object  like  a  road,  car,  or  person.  W
 everything  into  folders  and  used  a  custom  data  loader  to  make  sure  each 
 image matched with the right mask. 
 
-●  Download  IDD Part 2  from  Kaggle  . 
+●  Download  IDD Part 2  from  Kaggle.
+
 ●  Organize the dataset into folders: images/ and masks/. 
+
 ●  Ensure that each image has a corresponding segmentation mask. 
 
 ## Data Preprocessing and Augmentation
@@ -47,8 +49,11 @@ All  images  and  masks  were  resized  to  256×256  for  consistency.  We
 normalized  the  images  using  ImageNet  stats  to  help  the  model  learn  better. 
 The  mask  values  were  kept  unchanged  to  preserve  labels,  and  we  used  data 
 augmentation to mimic different lighting and scene conditions. 
+
 ●  Resize all input images and masks to  256x256  resolution. 
+
 ●  Normalize pixel values (e.g., scale to 0–1 or mean-std normalization). 
+
 ●  Convert masks to  class labels  (0–25), ensuring correct mapping.
 
 
@@ -73,10 +78,15 @@ Applied transformations: resizing, normalization, and tensor conversion
 ## Settings:
 
 ●  Loss Function: CrossEntropyLoss with ignore_index=255 
+
 ●  Optimizer: Adam, learning rate = 0.0001 
+
 ●  Platform: Trained on Google Colab GPU 
+
 ●  Batching: Used DataLoader for efficient loading and preprocessing 
+
 ●  Epochs: Ran for 2 epochs 
+
 ●  Logging: Recorded training loss per epoch 
 
 
@@ -85,7 +95,9 @@ Applied transformations: resizing, normalization, and tensor conversion
 The  evaluation  was  conducted  on  the  validation  set  with  all  predictions  and 
 ground  truths  resized  to  1280×720  resolution  ,  in  line  with  the  AutoNUE 
 benchmark format. 
+
 ●  Pixel Accuracy 
+
 ●  Mean IoU 
 These  metrics  indicate  that  the  model  was  able  to  reliably  distinguish 
 between  various  elements  of  the  road  scene,  such  as  vehicles,  roads, 
